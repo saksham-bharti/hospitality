@@ -13,15 +13,19 @@ def upload_page():
 
 
 def alloting(dfg, dfh):
+    """Function to allocate groups to hostel rooms based on gender and capacity."""
     allocation = []
+    # Rename columns for clarity
     dfg.columns = ['Group ID','Members','Gender']
     dfh.columns = ['Hostel Name','Room Number','Capacity','Gender']
-    
+
+    # Iterate over each group from the groups dataframe (dfg)
     for _, group in dfg.iterrows():
         group_id = group['Group ID']
         members = group['Members']
         gender = group['Gender']
 
+        # Handle multiple genders in the group
         if '&' in gender:
             genders = gender.split('&')
             gender_count = [int(s.split()[0]) for s in genders]
@@ -30,6 +34,7 @@ def alloting(dfg, dfh):
             gender_count = [members]
             gender_type = [gender]
 
+        # Allocate members to rooms based on gender and capacity
         for count, g in zip(gender_count, gender_type):
             while count > 0:
                 avail_rooms = dfh[(dfh['Gender'] == g) & (dfh['Capacity'] >= count)]
@@ -66,6 +71,7 @@ def alloting(dfg, dfh):
                         dfh = dfh.drop(room.name)
                         # count = 0
                     else:
+                        # If no suitable room found, mark allocation as NA
                         allocation.append({
                             'Group ID': group_id,
                             'Hostel Name': 'NA',
@@ -79,38 +85,44 @@ def alloting(dfg, dfh):
 
 @app.route('/upload', methods=['POST'])
 def upload_files():
+
+    """Handle file upload and allocation process."""
+
     if 'file1' not in request.files or 'file2' not in request.files:
         return jsonify({"error": "missing files"}), 400
     file1 = request.files['file1']
     file2 = request.files['file2']
     
     try:
+        # Read CSV files into pandas DataFrames
         dfg = pd.read_csv(file1)
         dfh = pd.read_csv(file2)
     except Exception as e:
         return jsonify({'Error': str(e)}), e
     
-    allocation = alloting(dfg, dfh)
-    allocation_df = pd.DataFrame(allocation)
+    try:
+        # Perform allocation based on uploaded data
+        allocation = alloting(dfg, dfh)
+        allocation_df = pd.DataFrame(allocation)
+        
+        #Prepare CSV for download
+        output = io.BytesIO()
+        allocation_df.to_csv(output, index=False)
+        output.seek(0)
+        
+        allocation_csv_content = output.getvalue()
 
-    output = io.BytesIO()
-    allocation_df.to_csv(output, index=False)
-    output.seek(0)
-
-    # Convert the dataframes to HTML tables
-    # dfg_html = dfg.to_html(classes='data', header="true", index=False)
-    # dfh_html = dfh.to_html(classes='data', header="true", index=False)
-    allocation_html = allocation_df.to_html(classes='data', header="true", index=False)
-
-    # Save the CSV content in a global variable to allow for download
-    global allocation_csv_content
-    allocation_csv_content = output.getvalue()
-
-    return render_template('result.html', allocation_html=allocation_html)
+        # Render result template with allocation data
+        return render_template('result.html', allocation_html=allocation_df.to_html(classes='data', header="true", index=False))
+    
+    except Exception as e:
+        # Render error template if allocation process fails
+        return render_template('error.html', message=f"Error during allocation: {str(e)}"), 500
 
 
 @app.route('/download')
 def download_file():
+    """Download allocated data as CSV."""
     global allocation_csv_content
     return send_file(io.BytesIO(allocation_csv_content),
                      mimetype='text/csv',
@@ -119,9 +131,8 @@ def download_file():
 
 @app.route('/again')
 def again():
+    """Redirect to upload page to start over."""
     return render_template('upload.html')
-
-
 
 if __name__ == '__main__':
     app.run(debug=True)

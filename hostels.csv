@@ -1,0 +1,25 @@
+﻿Hostel Name ,Room Number ,Capacity,Gender
+BH1,101,3,Boys
+BH2,102,4,Boys
+GH1,201,2,Girls
+GH2,202,5,Girls
+BH1,103,6,Boys
+BH2,104,5,Boys
+GH1,203,9,Girls
+GH2,204,6,Girls
+BH1,105,5,Boys
+BH2,106,2,Boys
+GH1,205,6,Girls
+GH2,206,5,Girls
+BH1,107,9,Boys
+BH2,108,5,Boys
+GH1,207,6,Girls
+GH2,208,5,Girls
+BH1,109,8,Boys
+BH2,110,5,Boys
+GH1,209,2,Girls
+GH2,210,6,Girls
+BH1,111,4,Boys
+BH2,112,9,Boys
+GH1,211,6,Girls
+GH2,212,5,Girls

@@ -1,0 +1,10 @@
+,Group ID,Hostel Name,Room Number,Members Allocated,Members remaining
+0,101,BH1,101,3,
+1,102,GH2,202,4,
+2,103,BH2,102,2,
+3,104,GH1,201,2,
+4,104,GH2,202,1,
+5,104,NA,NA,0,2.0
+6,105,BH2,102,2,
+7,105,NA,NA,0,3.0
+8,105,NA,NA,0,3.0

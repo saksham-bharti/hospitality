@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Allocation Results</title>
+    <style>
+        body {
+            text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-image: url('/static/index4.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            color: #fff;
+        }
+
+        .logo img {
+            width: 150px;
+            padding: 2rem;
+        }
+
+        .back-button img {
+            width: 30px;
+            margin-right: 5px;
+            margin-left: 1100px;
+        }
+
+        main {
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+        .output-container {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            position: relative;
+            max-height: 65vh;
+            overflow: auto;
+        }
+        .data {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        .data th, .data td {
+            border: 1px solid #a12f2f;
+            padding: 8px;
+        }
+        .data th {
+            background-color: #f2f2f2;
+        }
+        .download-link {
+            margin-top: 1rem;
+            padding: 10px 20px;
+            background-color: #f61c1c;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            align-self: flex-end;
+        }
+        .download-link:hover {
+            background-color: #dd0a0a;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="{{ url_for('again') }}">
+                <img src="{{ url_for('static', filename='logo 2.jpg') }}" alt="Your website logo">
+            </a>
+            <a href="javascript:history.back()" class="back-button">
+                <img src="{{ url_for('static', filename='back.png' ) }}" alt="Back"> 
+            </a>
+        </div>        
+    </header>
+    <main>
+        <section class="output-container">
+            <h2>Allocation Results</h2>
+            {{ allocation_html|safe }}
+        </section>
+        <a href="/download" class="download-link">Download Allocation CSV</a>
+    </main>
+</body>
+</html>

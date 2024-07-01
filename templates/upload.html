@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV Upload</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+            background-image: url('/static/index4.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .container {
+            /* background-color: #fff; */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 650px;
+        }
+
+        h1 {
+            color: #5a67d8;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* background-color: #434190; */
+        }
+
+        label {
+            font-size: 20px;
+            margin: 10px 0;
+            color: #121721;
+        }
+
+        input[type="file"] {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #121213;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #828aa55d;
+        }
+
+        button {
+            background-color: #5a67d8;
+            color: #fff;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #434190;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Upload CSV Files</h1>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <label for="file1">Groups CSV:</label>
+            <input type="file" id="file1" name="file1" accept=".csv" required><br>
+            <label for="file2">Hostels CSV:</label>
+            <input type="file" id="file2" name="file2" accept=".csv" required><br>
+            <button type="submit">Upload and Allocate</button>
+        </form>
+    </div>
+</body>
+</html>

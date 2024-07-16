@@ -87,6 +87,7 @@ def alloting(dfg, dfh):
 def upload_files():
 
     """Handle file upload and allocation process."""
+    global allocation_csv_content
 
     if 'file1' not in request.files or 'file2' not in request.files:
         return jsonify({"error": "missing files"}), 400
